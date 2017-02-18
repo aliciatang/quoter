@@ -9,13 +9,16 @@ def quote(tickers):
     return -- list of prices e.g. [{'NASDAQ:GOOG': 500},{'NASDAQ:MSFT': 80}]
     """
     if not tickers:
-        return []
+        return None
 
     baseUrl = 'http://finance.google.com/finance/info?q='
     url = baseUrl + ",".join(tickers)
     response = requests.get(url)
-    data = json.loads(response.text.replace('//', ''))
     response.connection.close()
+    if response.status_code != 200 :
+        return None
+
+    data = json.loads(response.text.replace('//', ''))
     result = {}
     for item in data:
         result[item['e']+":"+item['t']] = float(item['l'])
