@@ -20,10 +20,10 @@ def watch(conf):
     alerts = {}
     for ticker, price in prices.items():
         limits = conf[ticker]
-        if 'upper' in limits and price >= limits['upper']:
+        if 'upper' in limits and limits['upper'] and price >= limits['upper']:
            alerts[ticker] = limits
            alerts[ticker]['price'] = price
-        if 'lower'in limits and price <= limits['lower']:
+        if 'lower'in limits and limits['lower'] and price <= limits['lower']:
            alerts[ticker] = limits
            alerts[ticker]['price'] = price
     return alerts
