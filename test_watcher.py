@@ -28,5 +28,12 @@ class TestWatcher(unittest.TestCase):
         self.assertTrue(res['NASDAQ:GOOG']['price'] < 8000)
         self.assertTrue(res['NASDAQ:FB']['price'] > 4)
 
+    def test_sideEffect(self):
+        conf = {'NASDAQ:GOOG': {'upper': 90000, 'lower': 1}}
+        res = watcher.watch(conf)
+        self.assertEqual(res, {})
+        self.assertTrue(conf['NASDAQ:GOOG']['price'] > 0)
+
+
 if __name__ == '__main__':
     unittest.main()
