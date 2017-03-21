@@ -10,6 +10,10 @@ class TestGetPrices(unittest.TestCase):
         res = quoter.quote(['Goog'])
         self.assertEqual(len(res), 1)
         self.assertTrue(res['NASDAQ:GOOG'] > 0)
+    def test_expessive(self):
+        res = quoter.quote(['NYSE:BRK.A'])
+        self.assertEqual(len(res), 1)
+        self.assertTrue(res['NYSE:BRK.A'] >20000)
 
     def test_unhappy(self):
         res = quoter.quote(['unhappy'])

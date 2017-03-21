@@ -1,4 +1,5 @@
-import requests,json
+import requests,json,locale
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 def quote(tickers):
     """ Get prices from google finace and return a list of object with
@@ -21,6 +22,6 @@ def quote(tickers):
     data = json.loads(response.text.replace('//', ''))
     result = {}
     for item in data:
-        result[item['e']+":"+item['t']] = float(item['l'])
+        result[item['e']+":"+item['t']] = locale.atof(item['l'])
     return result
 
