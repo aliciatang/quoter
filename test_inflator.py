@@ -10,16 +10,16 @@ class TestWatcher(unittest.TestCase):
         self.assertEqual(inflater.inflate({'factor': 'no'}), {'factor': 'no'})
 
     def test_less(self):
-        monthAgo = (datetime.now() - relativedelta.relativedelta(months=1)).strftime('%Y/%m/%d')
-        conf = {'date': monthAgo, 'factor': '8%'}
+        monthAgo = datetime.now() - relativedelta.relativedelta(months=1)
+        conf = {'date': monthAgo, 'factor': 0.08}
         conf = inflater.inflate(conf)
         inflate = conf['inflate']
         self.assertTrue(inflate <  1.08)
         self.assertTrue(inflate >  1)
 
     def test_more(self):
-        monthAgo = (datetime.now() - relativedelta.relativedelta(months=18)).strftime('%Y/%m/%d')
-        conf = {'date': monthAgo, 'factor': '8%'}
+        moreThanAYearAgo = datetime.now() - relativedelta.relativedelta(months=18)
+        conf = {'date': moreThanAYearAgo, 'factor': 0.08}
         conf = inflater.inflate(conf)
         inflate = conf['inflate']
         self.assertTrue(inflate >  1.08)

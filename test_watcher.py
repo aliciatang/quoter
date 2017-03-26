@@ -39,12 +39,12 @@ class TestWatcher(unittest.TestCase):
         self.assertTrue(conf['NASDAQ:GOOG']['price'] > 0)
 
     def test_inflate(self):
-        monthAgo = (datetime.now() - relativedelta.relativedelta(months=1)).strftime('%Y/%m/%d')
+        monthAgo = datetime.now() - relativedelta.relativedelta(months=1)
         ticker = 'NASDAQ:GOOG'
         quote = quoter.quote([ticker])[ticker]
-        inflate = inflater.inflate({'date': monthAgo, 'factor': '15%'})
+        inflate = inflater.inflate({'date': monthAgo, 'factor': 0.18})
         res = watcher.watch({
-            ticker: { 'lower': quote, 'date': monthAgo, 'factor': '15%'},
+            ticker: { 'lower': quote, 'date': monthAgo, 'factor': 0.18},
             })
         self.assertEqual(len(res), 1)
         self.assertEqual(res[ticker]['inflate'], inflate['inflate'])

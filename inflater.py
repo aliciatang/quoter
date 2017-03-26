@@ -1,7 +1,5 @@
 #! /usr/local/bin/python3
-import datetime, re, locale, math
-from dateutil.parser import parse
-locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+import datetime, math
 
 def inflate(conf):
     '''
@@ -18,17 +16,11 @@ def inflate(conf):
     if not conf:
         return conf
     today = datetime.datetime.now()
-    pattern = re.compile(r'([\d,.+-]*)%')
     if not 'date' in conf or not 'factor' in conf:
         return conf
-    try:
-        date = parse(conf['date'])
-    except:
-        return conf
-    factors = pattern.findall(conf['factor'])
-    if factors:
-        factor = locale.atof(factors[0])/100
-    if not factor:
+    date = conf['date']
+    factor = conf['factor']
+    if not date or not factor:
         return conf
     days = (today - date).days
     conf['inflate'] = (math.exp(math.log(1 + factor)/356))**days
