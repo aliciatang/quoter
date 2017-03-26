@@ -24,11 +24,11 @@ def watch(conf):
     for ticker, price in prices.items():
         limits = inflate(conf[ticker])
         limits['price'] = price
-        if 'inflate' in limits:
+        if 'inflate' in limits and limits['inflate']:
             price = price/limits['inflate']
-            if 'upper' in limits:
+            if 'upper' in limits and limits['upper']:
                 limits['adjUpper'] = limits['upper'] * limits['inflate']
-            if 'lower' in limits:
+            if 'lower' in limits and limits['lower']:
                 limits['adjLower'] = limits['lower'] * limits['inflate']
 
         if 'upper' in limits and limits['upper'] and price >= limits['upper']:

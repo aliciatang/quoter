@@ -51,6 +51,17 @@ class TestWatcher(unittest.TestCase):
         self.assertTrue(res[ticker]['adjLower'] > res[ticker]['lower'])
         self.assertTrue(res[ticker]['adjUpper'] > res[ticker]['upper'])
 
+    def test_inflateNone(self):
+        monthAgo = datetime.now() - relativedelta.relativedelta(months=1)
+        ticker = 'NASDAQ:GOOG'
+        quote = quoter.quote([ticker])[ticker]
+        inflate = inflater.inflate({'date': monthAgo, 'factor': 0.18})
+        conf = { ticker: { 'lower': None, 'upper': None, 'date': monthAgo, 'factor': 0.18} }
+        res = watcher.watch(conf)
+        self.assertEqual(conf[ticker]['inflate'], inflate['inflate'])
+        self.assertFalse('adjLower' in conf[ticker])
+        self.assertFalse('adjUpper' in conf[ticker])
+
 
 if __name__ == '__main__':
     unittest.main()
