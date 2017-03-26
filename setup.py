@@ -6,5 +6,5 @@ setup(name = 'quoter',
       author = 'Alicia Tang',
       author_email = 'alicia.x.tang@gmail.com',
       url = 'https://github.com/aliciatang/quoter',
-      py_modules = ['quoter', 'watcher'],
+      py_modules = ['quoter', 'watcher', 'inflater'],
      )
