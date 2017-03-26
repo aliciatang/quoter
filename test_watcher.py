@@ -44,10 +44,12 @@ class TestWatcher(unittest.TestCase):
         quote = quoter.quote([ticker])[ticker]
         inflate = inflater.inflate({'date': monthAgo, 'factor': 0.18})
         res = watcher.watch({
-            ticker: { 'lower': quote, 'date': monthAgo, 'factor': 0.18},
+            ticker: { 'lower': quote, 'upper': quote* 1.8, 'date': monthAgo, 'factor': 0.18},
             })
         self.assertEqual(len(res), 1)
         self.assertEqual(res[ticker]['inflate'], inflate['inflate'])
+        self.assertTrue(res[ticker]['adjLower'] > res[ticker]['lower'])
+        self.assertTrue(res[ticker]['adjUpper'] > res[ticker]['upper'])
 
 
 if __name__ == '__main__':

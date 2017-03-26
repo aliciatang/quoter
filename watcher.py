@@ -26,6 +26,11 @@ def watch(conf):
         limits['price'] = price
         if 'inflate' in limits:
             price = price/limits['inflate']
+            if 'upper' in limits:
+                limits['adjUpper'] = limits['upper'] * limits['inflate']
+            if 'lower' in limits:
+                limits['adjLower'] = limits['lower'] * limits['inflate']
+
         if 'upper' in limits and limits['upper'] and price >= limits['upper']:
            alerts[ticker] = limits
         if 'lower'in limits and limits['lower'] and price <= limits['lower']:
