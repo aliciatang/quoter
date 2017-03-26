@@ -11,23 +11,25 @@ def inflate(conf):
 
     Example conf:
     {
-      'NASDAQ:GOOG': { 'upper': 900, 'lower': 432, 'date': '2017/1/1', 'factor':'2%'},
-      'NASDAQ:FB': { 'lower': 120, 'date': '2017/2/2', 'factor':'10%'},
-      'NASDAQ:MSFT': { 'upper': 100, }
+      'date': '2017/1/1',
+      'factor':'2%'
     }
     '''
+    if not conf:
+        return conf
     today = datetime.datetime.now()
     pattern = re.compile(r'([\d,.+-]*)%')
-    for ticker, cfg in conf.items():
-        if 'date' in cfg and 'factor' in cfg:
-            try:
-                date = parse(cfg['date'])
-            except:
-                date = None
-            factors = pattern.findall(cfg['factor'])
-            if factors:
-                factor = locale.atof(factors[0])/100
-            if date and factor:
-                days = (today - date).days
-                cfg['inflate'] = (math.exp(math.log(1 + factor)/356))**days
+    if not 'date' in conf or not 'factor' in conf:
+        return conf
+    try:
+        date = parse(conf['date'])
+    except:
+        return conf
+    factors = pattern.findall(conf['factor'])
+    if factors:
+        factor = locale.atof(factors[0])/100
+    if not factor:
+        return conf
+    days = (today - date).days
+    conf['inflate'] = (math.exp(math.log(1 + factor)/356))**days
     return conf
