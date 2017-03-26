@@ -1,5 +1,6 @@
 #! /usr/local/bin/python3
 from quoter import quote
+from inflater import inflate
 
 def watch(conf):
     '''
@@ -11,7 +12,7 @@ def watch(conf):
 
     Example conf:
     {
-      'NASDAQ:GOOG': { 'upper': 900, 'lower': 432 },
+      'NASDAQ:GOOG': { 'upper': 900, 'lower': 432 ,'date': '2017/1/1', 'factor': '5%'},
       'NASDAQ:FB': { 'lower': 120 },
       'NASDAQ:MSFT': { 'upper': 100}
     }
@@ -21,8 +22,10 @@ def watch(conf):
         return None
     alerts = {}
     for ticker, price in prices.items():
-        limits = conf[ticker]
+        limits = inflate(conf[ticker])
         limits['price'] = price
+        if 'inflate' in limits:
+            price = price/limits['inflate']
         if 'upper' in limits and limits['upper'] and price >= limits['upper']:
            alerts[ticker] = limits
         if 'lower'in limits and limits['lower'] and price <= limits['lower']:
