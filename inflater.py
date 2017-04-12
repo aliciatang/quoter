@@ -23,5 +23,5 @@ def inflate(conf):
     if not date or not factor:
         return conf
     days = (today - date).days
-    conf['inflate'] = (math.exp(math.log(1 + factor)/365))**days
+    conf['inflate'] = (1 + (factor/365))**days
     return conf
