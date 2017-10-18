@@ -1,27 +1,15 @@
-import requests,json,locale
-locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+from quoter_IEX import quote_IEX
 
 def quote(tickers):
-    """ Get prices from google finace and return a list of object with
-    exchange:ticker as the key, and price as the value. The result may
-    not contain all the given tickers and may not return in the same order.
+    """ Get prices from several finance APIs and return a dictionary of ticker:price as key:value pair.
+    The result may not contain all the given tickers and may not return in the same order.
 
-    tickers -- list of tickers, e.g. ['GOOG','NASDAQ:MSFT']
-    return -- list of prices e.g. [{'NASDAQ:GOOG': 500},{'NASDAQ:MSFT': 80}]
+    tickers -- list of tickers, e.g. ['GOOG','MSFT']
+    return -- dict of ticker:prices e.g. {'GOOG': 500,'MSFT': 80}
     """
     if not tickers:
         return None
 
-    baseUrl = 'http://finance.google.com/finance/info?q='
-    url = baseUrl + ",".join(tickers)
-    response = requests.get(url)
-    response.connection.close()
-    if response.status_code != 200 :
-        return None
-
-    data = json.loads(response.text.replace('//', ''))
-    result = {}
-    for item in data:
-        result[item['e']+":"+item['t']] = locale.atof(item['l'])
+    result=quote_IEX([t.upper() for t in tickers])
     return result
 
