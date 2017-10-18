@@ -1,5 +1,3 @@
-import sys
-sys.path.append('/Users/xueqiantang/Scode/quoter')
 import iex_data as IEX
 
 def quote_IEX(tickers):
