@@ -1,4 +1,4 @@
-from quoter_IEX import quote_IEX
+from .quoter_IEX import quote_IEX
 
 def quote(tickers):
     """ Get prices from several finance APIs and return a dictionary of ticker:price as key:value pair.

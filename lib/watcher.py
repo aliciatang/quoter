@@ -1,6 +1,6 @@
 #! /usr/local/bin/python3
-from quoter import quote
-from inflater import inflate
+from .quoter import quote
+from .inflater import inflate
 
 def watch(conf):
     '''
