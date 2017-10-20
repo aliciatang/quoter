@@ -21,24 +21,20 @@ def quote(tickers):
                 hk_tickers.append(t)
         else:
             us_tickers.append(t)
-    print(us_tickers,'and',cn_tickers,'and',hk_tickers)
-
     if us_tickers:
        us_result = quote_IEX(us_tickers)
-    else: us_result={'None':0}
     if cn_tickers:
        cn_result = quote_tushare(cn_tickers)
-    else: cn_result={}
     if hk_tickers:
        hk_result = quote_tushare(hk_tickers)
-    else: hk_result={}
-    print(cn_result)
-    ## merge cn_resutls and us_result
-    results=us_result
-    results.update(cn_result)
-    print(results)
-    results.update(hk_result)
-    print(results)
+    ## merge all 3 results
+    results = {}
+    if us_result :
+        results.update(us_result)
+    if cn_result :
+        results.update(cn_result)
+    if hk_result :
+        results.update(hk_result)
     return results
 '''
 tickers=['600004','msft']
