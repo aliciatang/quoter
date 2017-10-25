@@ -1,7 +1,7 @@
-from quoter_IEX import quote_IEX
-from quoter_tushare import quote_tushare
-from quoter_futunn import quote_futunn
-from quoter_alphavantage import quote_alphavantage
+from .quoter_IEX import quote_IEX
+from .quoter_tushare import quote_tushare
+from .quoter_futunn import quote_futunn
+from .quoter_alphavantage import quote_alphavantage
 def quote(tickers):
     """ Get prices from several finance APIs and return a dictionary of ticker:price as key:value pair.
     The result may not contain all the given tickers and may not return in the same order.
@@ -24,7 +24,7 @@ def quote(tickers):
 
     #quote_API_list=[quote_tushare,quote_alphavantage,quote_futunn,quote_IEX]  #the sequence in this list defines which API is used first
 
-   # quote_API_list=[quote_alphavantage,quote_futunn,quote_IEX,quote_tushare]  #the sequence in this list defines which API is used first
+    #quote_API_list=[quote_alphavantage,quote_futunn,quote_IEX,quote_tushare]  #the sequence in this list defines which API is used first
 
     results={}
     remaining_tickers=tickers
@@ -48,7 +48,6 @@ def quote(tickers):
         print('Tickers cannot be quoted: ', failed_tickers)
 
     return results
-
 '''
 tickers=['US.msft','HK.02186','US.BRK.A','US.NSRGY','SH.600004','SH.833330','SZ.000651','US.M0FT','MSFT','SH.510300','SZ.510300','SH.300676','SZ.300676','SZ.833330','SH.833330','SH.600004']
 b=quote(tickers)
