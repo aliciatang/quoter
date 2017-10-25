@@ -14,3 +14,15 @@ python3
 >>> price
 {'NASDAQ:GOOG': 825.89, 'NASDAQ:MSFT': 64.52}
 ```
+
+## Tests:
+
+* run single test
+```
+python3 -m tests.test_quoter TestGetPrices.test_HK
+```
+
+* run all tests
+```
+python3 -m tests.test_quoter
+```
