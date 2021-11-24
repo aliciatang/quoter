@@ -1,42 +1,28 @@
 import unittest
-from lib.quoter import quote
+import quoter
 
 class TestGetPrices(unittest.TestCase):
 
     def test_empty(self):
-        self.assertEqual(quote([]), {})
+        self.assertEqual(quoter.quote([]), None)
 
-    def test_US(self):
-        res = quote(['US.Goog'])
+    def test_happy(self):
+        res = quoter.quote(['Goog'])
         self.assertEqual(len(res), 1)
-        self.assertTrue(res['US.GOOG'] > 0)
-
+        self.assertTrue(res['NASDAQ:GOOG'] > 0)
     def test_expessive(self):
-        res = quote(['US.BRK.A'])
+        res = quoter.quote(['NYSE:BRK.A'])
         self.assertEqual(len(res), 1)
-        self.assertTrue(res['US.BRK.A'] > 20000)
-
-    def test_SH(self):
-        res = quote(['SH.600004'])
-        self.assertTrue(res['SH.600004'] > 0)
-
-    def test_SZ(self):
-        res = quote(['SZ.000651'])
-        self.assertTrue(res['SZ.000651'] > 0)
-
-    def test_HK(self):
-        res = quote(['HK.02186'])
-        self.assertEqual(len(res), 1)
-        self.assertTrue(res['HK.02186'] > 0)
+        self.assertTrue(res['NYSE:BRK.A'] >20000)
 
     def test_unhappy(self):
-        res = quote(['SH.833330'])
-        self.assertEqual(res, {})
+        res = quoter.quote(['unhappy'])
+        self.assertEqual(res, None)
 
     def test_mix(self):
-        res = quote(['unhappy', 'US.goog'])
+        res = quoter.quote(['unhappy', 'goog'])
         self.assertEqual(len(res), 1)
-        self.assertTrue(res['US.GOOG'] > 0)
+        self.assertTrue(res['NASDAQ:GOOG'] > 0)
 
 if __name__ == '__main__':
     unittest.main()

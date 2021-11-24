@@ -1,10 +1,11 @@
 from distutils.core import setup
 
 setup(name = 'quoter',
-      version = '0.0.1',
+      version = '0.0.2',
       description = 'Quote stock price by ticker',
       author = 'Alicia Tang',
       author_email = 'alicia.x.tang@gmail.com',
       url = 'https://github.com/aliciatang/quoter',
       py_modules = ['lib.quoter', 'lib.watcher', 'lib.inflater'],
+      install_requires=[package.split("\n")[0] for package in open("requirements.txt", "r").readlines()]
      )
