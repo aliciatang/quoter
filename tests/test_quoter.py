@@ -1,28 +1,27 @@
 import unittest
-import quoter
+from lib import quoter
 
 class TestGetPrices(unittest.TestCase):
 
     def test_empty(self):
-        self.assertEqual(quoter.quote([]), None)
+        self.assertEqual(quoter.quote([]), {})
 
     def test_happy(self):
-        res = quoter.quote(['Goog'])
-        self.assertEqual(len(res), 1)
-        self.assertTrue(res['NASDAQ:GOOG'] > 0)
+        res = quoter.quote(['US.Goog', 'US.BRK.A'])
+        self.assertTrue(res['US.GOOG'] > 0)
+        self.assertTrue(res['US.BRK.A'] >20000)
+
     def test_expessive(self):
-        res = quoter.quote(['NYSE:BRK.A'])
-        self.assertEqual(len(res), 1)
-        self.assertTrue(res['NYSE:BRK.A'] >20000)
+        res = quoter.quote(['US.BRK.A'])
+        self.assertTrue(res['US.BRK.A'] >20000)
 
     def test_unhappy(self):
         res = quoter.quote(['unhappy'])
-        self.assertEqual(res, None)
+        self.assertEqual(res, {})
 
     def test_mix(self):
-        res = quoter.quote(['unhappy', 'goog'])
-        self.assertEqual(len(res), 1)
-        self.assertTrue(res['NASDAQ:GOOG'] > 0)
+        res = quoter.quote(['unhappy', 'US.BRK.A'])
+        self.assertTrue(res['US.BRK.A'] > 0)
 
 if __name__ == '__main__':
     unittest.main()
