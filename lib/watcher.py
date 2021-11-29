@@ -12,9 +12,9 @@ def watch(conf):
 
     Example conf:
     {
-      'NASDAQ:GOOG': { 'upper': 900, 'lower': 432 ,'date': '2017/1/1', 'factor': '5%'},
-      'NASDAQ:FB': { 'lower': 120 },
-      'NASDAQ:MSFT': { 'upper': 100}
+      'US.GOOG': { 'upper': 900, 'lower': 432 ,'date': '2017/1/1', 'factor': '5%'},
+      'US.FB': { 'lower': 120 },
+      'US.MSFT': { 'upper': 100}
     }
     '''
     prices = quote(list(conf.keys()))

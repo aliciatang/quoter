@@ -1,7 +1,6 @@
 import unittest
 from datetime import datetime
 from dateutil import relativedelta
-import env
 from lib import quoter
 from lib import inflater
 from lib import watcher
@@ -13,12 +12,11 @@ class TestWatcher(unittest.TestCase):
 
     def test_happy(self):
         res = watcher.watch({
-            'GOOG': { 'upper': 9000, 'lower': 8000 },
-            'FB': { 'lower': 120 },
-            'MSFT': { 'upper': 100 }
+            'US.GOOG': { 'upper': 9000, 'lower': 8000 },
+            'US.FB': { 'lower': 120 },
+            'US.MSFT': { 'upper': 100 }
             })
-        self.assertEqual(len(res), 1)
-        self.assertTrue(res['GOOG']['price'] < 8000)
+        self.assertTrue(res['US.GOOG']['price'] < 8000)
 
     def test_unhappy(self):
         res = watcher.watch({'unhappy': None})
@@ -26,22 +24,22 @@ class TestWatcher(unittest.TestCase):
 
     def test_none(self):
         res = watcher.watch({
-            'GOOG': {'upper': None, 'lower': 8000},
-            'FB': {'upper': 4, 'lower': None}
+            'US.GOOG': {'upper': None, 'lower': 8000},
+            'US.FB': {'upper': 4, 'lower': None}
             })
         self.assertEqual(len(res), 2)
-        self.assertTrue(res['GOOG']['price'] < 8000)
-        self.assertTrue(res['FB']['price'] > 4)
+        self.assertTrue(res['US.GOOG']['price'] < 8000)
+        self.assertTrue(res['US.FB']['price'] > 4)
 
     def test_sideEffect(self):
-        conf = {'GOOG': {'upper': 90000, 'lower': 1}}
+        conf = {'US.GOOG': {'upper': 90000, 'lower': 1}}
         res = watcher.watch(conf)
         self.assertEqual(res, {})
-        self.assertTrue(conf['GOOG']['price'] > 0)
+        self.assertTrue(conf['US.GOOG']['price'] > 0)
 
     def test_inflate(self):
         monthAgo = datetime.now() - relativedelta.relativedelta(months=1)
-        ticker = 'GOOG'
+        ticker = 'US.GOOG'
         quote = quoter.quote([ticker])[ticker]
         inflate = inflater.inflate({'date': monthAgo, 'factor': 0.18})
         res = watcher.watch({
@@ -54,10 +52,13 @@ class TestWatcher(unittest.TestCase):
 
     def test_inflateNone(self):
         monthAgo = datetime.now() - relativedelta.relativedelta(months=1)
-        ticker = 'GOOG'
-        quote = quoter.quote([ticker])[ticker]
+        ticker = 'US.GOOG'
+        quote = quoter.quote([ticker,'US.MSFT'])[ticker]
+        print(quote)
         inflate = inflater.inflate({'date': monthAgo, 'factor': 0.18})
-        conf = { ticker: { 'lower': None, 'upper': None, 'date': monthAgo, 'factor': 0.18} }
+        print(inflate)
+        conf = { ticker: { 'lower': None, 'upper': None, 'date': monthAgo, 'factor': 0.18},
+                 }
         res = watcher.watch(conf)
         self.assertEqual(conf[ticker]['inflate'], inflate['inflate'])
         self.assertFalse('adjLower' in conf[ticker])
