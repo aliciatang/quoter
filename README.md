@@ -3,7 +3,7 @@ A simple python lib for query stock info from availble free APIs.
 Currenly only query google with en_US locale.
 
 ## Install:
-`pip3 install requests json git+git://github.com/aliciatang/quoter.git@master --upgrade`
+`pip3 install git+git://github.com/aliciatang/quoter.git@master --upgrade`
 add `--upgrade` to get the latest version.
 
 ## Usage:
