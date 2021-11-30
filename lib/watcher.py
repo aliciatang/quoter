@@ -1,6 +1,7 @@
 #! /usr/local/bin/python3
 from .quoter import quote
 from .inflater import inflate
+from itertools import groupby
 
 def watch(conf):
     '''
@@ -17,9 +18,16 @@ def watch(conf):
       'US.MSFT': { 'upper': 100}
     }
     '''
-    prices = quote(list(conf.keys()))
-    if not prices:
-        return None
+    # partition keys by prefix
+    keys = list(conf.keys())
+    keys.sort()
+    prices = {}
+    for key, group in groupby(keys, lambda x: x[:3]):
+        parts = []
+        for thing in group:
+            parts.append(thing)
+        prices.update(quote(parts))
+
     alerts = {}
     for ticker, price in prices.items():
         limits = inflate(conf[ticker])
