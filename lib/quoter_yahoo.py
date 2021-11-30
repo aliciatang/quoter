@@ -5,6 +5,7 @@ import yfinance as yf
 Yahoo finance country/exchange code. For US stock,there is no prefix.
 for SH prefix need to be changed to '.SS' surfix.
 for SZ prefix need to be changed to '.SZ' surfix.
+for HK prefix need to be changed to '.KS' surfix.
 """
 def quote_yahoo(tickers):
     """ Get prices from yahoo finance APIs and return a dictionary of ticker:price as key:value pair.
@@ -31,6 +32,9 @@ def quote_yahoo(tickers):
             reformated_tickers.append(formated_ticker)
         elif ticker[:3] == 'SZ.':
             formated_ticker = ticker[3:] + '.SZ'
+            reformated_tickers.append(formated_ticker)
+        elif ticker[:3] == 'HK.':
+            formated_ticker = ticker[3:] + '.KS'
             reformated_tickers.append(formated_ticker)
 
     if(len(reformated_tickers) == 1):
@@ -60,6 +64,8 @@ def quote_yahoo(tickers):
                 restored_ticker = 'SH.' + tick[:-3]
             elif tick[-3:] == '.SZ':
                 restored_ticker = 'SZ.' + tick[:-3]
+            elif tick[-3:] == '.KS':
+                restored_ticker = 'HK.' + tick[:-3]
             else:
                 restored_ticker = 'US.' +tick.replace('-','.')
             ret_dict[restored_ticker]=close[tick][0]

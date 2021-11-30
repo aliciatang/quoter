@@ -26,10 +26,11 @@ class TestGetPrices(unittest.TestCase):
         self.assertTrue(res['US.GOOG'] > 0)
         self.assertTrue(res['US.BRK.B'] > 0)
     def test_china(self):
-        res = qy.quote_yahoo(['SZ.000651', 'SH.000001'])
-        self.assertEqual(len(res), 2) # DUMMY GOOG will be added
+        res = qy.quote_yahoo(['SZ.000651', 'SH.000001','HK.016580'])
+        self.assertEqual(len(res), 3)
         self.assertTrue(res['SZ.000651'] > 0)
         self.assertTrue(res['SH.000001'] > 0)
+        self.assertTrue(res['HK.016580'] > 0)
 
 
 if __name__ == '__main__':
