@@ -8,7 +8,7 @@ from lib import watcher
 class TestWatcher(unittest.TestCase):
 
     def test_empty(self):
-        self.assertEqual(watcher.watch({}), None)
+        self.assertEqual(watcher.watch({}), {})
 
     def test_happy(self):
         res = watcher.watch({
@@ -20,7 +20,7 @@ class TestWatcher(unittest.TestCase):
 
     def test_unhappy(self):
         res = watcher.watch({'unhappy': None})
-        self.assertEqual(res, None)
+        self.assertEqual(res, {})
 
     def test_none(self):
         res = watcher.watch({
@@ -63,6 +63,13 @@ class TestWatcher(unittest.TestCase):
         self.assertEqual(conf[ticker]['inflate'], inflate['inflate'])
         self.assertFalse('adjLower' in conf[ticker])
         self.assertFalse('adjUpper' in conf[ticker])
+
+    def test_partition(self):
+        conf={'SH.600004':{},'SH.600276':{}, 'US.GOOG':{}}
+        res = watcher.watch(conf)
+        self.assertTrue(conf['SH.600004']['price'] > 0)
+        self.assertTrue(conf['SH.600276']['price'] > 0)
+        self.assertTrue(conf['US.GOOG']['price'] > 0)
 
 
 if __name__ == '__main__':
