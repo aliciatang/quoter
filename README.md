@@ -1,6 +1,7 @@
 # Market Quoter
 A simple python lib for query stock info from availble free APIs.
-Currenly only query google with en_US locale.
+Currenly only using yahoo with en_US locale by default.
+This support US, HK and China stock markets. 
 
 ## Install:
 `pip3 install git+git://github.com/aliciatang/quoter.git@master --upgrade`
@@ -10,9 +11,16 @@ add `--upgrade` to get the latest version.
 ```
 python3
 >>> from quoter import quote
->>> price = quote(['GOOG', 'NASDAQ: MSFT'])
+>>> price = quote(['US.GOOG', 'US.MSFT'])
 >>> price
-{'NASDAQ:GOOG': 825.89, 'NASDAQ:MSFT': 64.52}
+{'US.GOOG': 825.89, 'US.MSFT': 64.52}
+```
+For international stocks use the following prefix.
+```python3
+US -> US
+HK -> HongKong
+SH -> Shang Hai
+SZ -> Shen Zhen
 ```
 
 ## Tests:
