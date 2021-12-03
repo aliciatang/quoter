@@ -3,6 +3,7 @@ import glob
 from .watcher import watch
 from .quoter import quote
 from .inflater import inflate
+from .renderer import render
 
 __version__ = "0.0.1"
 
