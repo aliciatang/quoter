@@ -1,7 +1,4 @@
 from .quoter_IEX import quote_IEX
-from .quoter_tushare import quote_tushare
-from .quoter_futunn import quote_futunn
-from .quoter_alphavantage import quote_alphavantage
 from .quoter_yahoo import quote_yahoo
 def quote(tickers):
     """ Get prices from several finance APIs and return a dictionary of ticker:price as key:value pair.
@@ -20,13 +17,6 @@ def quote(tickers):
         if t[:3] not in ['US.','HK.','SH.','SZ.']:
             print("Ticker ", t, " is in wrong format!")
     quote_API_list=[quote_yahoo]
-    #quote_API_list=[quote_futunn,quote_IEX,quote_tushare,quote_alphavantage]  #the sequence in this list defines which API is used first
-
-    #quote_API_list=[quote_IEX,quote_tushare,quote_alphavantage,quote_futunn]  #the sequence in this list defines which API is used first
-
-    #quote_API_list=[quote_tushare,quote_alphavantage,quote_futunn,quote_IEX]  #the sequence in this list defines which API is used first
-
-    #quote_API_list=[quote_alphavantage,quote_futunn,quote_IEX,quote_tushare]  #the sequence in this list defines which API is used first
 
     results={}
     remaining_tickers=tickers
