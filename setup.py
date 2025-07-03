@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name = 'quoter',
-      version = '0.0.2',
+      version = '0.0.3',
       description = 'Quote stock price by ticker',
       author = 'Alicia Tang',
       author_email = 'alicia.x.tang@gmail.com',

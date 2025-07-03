@@ -7,7 +7,6 @@ This api will allow you to:
 import pandas as pd
 from urllib.request import Request, urlopen
 import json
-from pandas.io.json import json_normalize
 
 
 class API(object):
@@ -56,9 +55,9 @@ class API(object):
         data = json.loads(elevations.decode('utf-8'))
 
         if nest:
-            data = json_normalize(data[nest])
+            data = pd.json_normalize(data[nest])
         else:
-            data = json_normalize(data)
+            data = pd.json_normalize(data)
 
         return pd.DataFrame(data)
 
